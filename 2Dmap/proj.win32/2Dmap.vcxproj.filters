@@ -16,6 +16,9 @@
     <Filter Include="Game">
       <UniqueIdentifier>{94340f91-6c72-4def-9dde-1626f9437efd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Render">
+      <UniqueIdentifier>{fab38e8f-530c-472e-9ad2-6b68cc0c8b2d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -30,7 +33,7 @@
     <ClCompile Include="..\Classes\pch.cpp">
       <Filter>PCH</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Character.cpp">
+    <ClCompile Include="..\Classes\Unit.cpp">
       <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,7 +50,7 @@
     <ClInclude Include="..\Classes\pch.h">
       <Filter>PCH</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Character.h">
+    <ClInclude Include="..\Classes\Unit.h">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
