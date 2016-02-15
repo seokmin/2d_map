@@ -19,6 +19,9 @@
     <Filter Include="Render">
       <UniqueIdentifier>{fab38e8f-530c-472e-9ad2-6b68cc0c8b2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Define">
+      <UniqueIdentifier>{4c129459-d6a0-4e49-bfdd-e58cc83161ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -34,6 +37,9 @@
       <Filter>PCH</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Unit.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SampleCharacter.cpp">
       <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,10 +59,19 @@
     <ClInclude Include="..\Classes\Unit.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\definition.h">
+      <Filter>Define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SampleCharacter.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

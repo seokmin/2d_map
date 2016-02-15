@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "main.h"
 #include "AppDelegate.h"
+#include <vld.h>
 
 USING_NS_CC;
 

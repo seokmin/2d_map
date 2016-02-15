@@ -1,10 +1,11 @@
 #pragma once
-class Unit : cocos2d::Ref
+class Unit : cocos2d::Node
 {
 public:
 	Unit();
 	virtual ~Unit();
-private:
+
+protected:
 	cocos2d::Sprite*	_sprite;
 	
 };

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "HelloWorldScene.h"
+#include "definition.h"
 
 USING_NS_CC;
 
@@ -27,7 +28,16 @@ bool HelloWorld::init()
     {
         return false;
     }
-    
+    ////메인 부분
+
+	Sprite* character = Sprite::create("testSprite.png", cocos2d::Rect(0, 0, 32, 48));
+	character->setPosition(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
+	this->addChild(character);
+
+
+	///////////////////
+
+
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 

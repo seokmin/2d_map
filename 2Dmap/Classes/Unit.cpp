@@ -5,6 +5,7 @@
 Unit::Unit()
 {
 	_sprite = cocos2d::Sprite::create();
+	this->addChild(_sprite);
 }
 
 
