@@ -22,6 +22,9 @@
     <Filter Include="Define">
       <UniqueIdentifier>{4c129459-d6a0-4e49-bfdd-e58cc83161ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{19281965-f167-40a0-b457-e83576e511db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -41,6 +44,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\SampleCharacter.cpp">
       <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SingleTile.cpp">
+      <Filter>Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +70,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\SampleCharacter.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SingleTile.h">
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
