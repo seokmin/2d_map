@@ -54,7 +54,7 @@ bool HelloWorld::init()
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 2);
 
-	TMXTiledMap* _tiledMap = TMXTiledMap::create("Map/testmap.tmx");
+	_tiledMap = TMXTiledMap::create("Map/testmap.tmx");
 	
 	this->addChild(_tiledMap,0);
 	//Size testMapSize = testMap->getContentSize();
@@ -79,8 +79,8 @@ void HelloWorld::setViewPointCenter(cocos2d::Point position)
 	cocos2d::Size winSize = cocos2d::Director::sharedDirector()->getWinSize();
 	int x = MAX(position.x, winSize.width);
 	int y = MAX(position.y, winSize.height);
-	//x = MIN(x, (_tiledMap->getMapSize().width * _tiledMap->getTileSize().width) - winSize.width / 2);
-	//y = MIN(x, (_tiledMap->getMapSize().height * _tiledMap->getTileSize().height) - winSize.height / 2);
+	x = MIN(x, (_tiledMap->getMapSize().width * _tiledMap->getTileSize().width) - winSize.width / 2);
+	y = MIN(x, (_tiledMap->getMapSize().height * _tiledMap->getTileSize().height) - winSize.height / 2);
 	cocos2d::Point actualPosition = ccp(x, y);
 	cocos2d::Point centerOfView = ccp(winSize.width / 2, winSize.height / 2);
 	cocos2d::Point viewPoint = ccpSub(centerOfView, actualPosition);

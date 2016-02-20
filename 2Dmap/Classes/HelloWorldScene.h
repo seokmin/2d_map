@@ -18,7 +18,7 @@ public:
 	void setViewPointCenter(cocos2d::Point position);
 
 private:
-	//TMXTiledMap*		_tiledMap;
-	SampleCharacter*	_sampleCharacter;
-	void				update(float delta);
+	cocos2d::TMXTiledMap*		_tiledMap;
+	SampleCharacter*			_sampleCharacter;
+	void						update(float delta);
 };
