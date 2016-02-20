@@ -1,5 +1,7 @@
 #pragma once
 
+class SampleCharacter;
+
 class HelloWorld : public cocos2d::Layer
 {
 public:
@@ -12,4 +14,11 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
+
+	void setViewPointCenter(cocos2d::Point position);
+
+private:
+	//TMXTiledMap*		_tiledMap;
+	SampleCharacter*	_sampleCharacter;
+	void				update(float delta);
 };
