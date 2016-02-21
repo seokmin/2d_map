@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "HelloWorldScene.h"
 #include "SampleCharacter.h"
-#include "definition.h"
+#include "NodeTileMap.h"
 USING_NS_CC;
 
 Scene* HelloWorld::createScene()
@@ -28,6 +28,11 @@ bool HelloWorld::init()
     {
         return false;
     }
+
+	//초기화
+	for (auto i = _isKeyPressed; i < _isKeyPressed + sizeof(_isKeyPressed) / sizeof(bool);++i)
+		*i = false;
+
     ////메인 부분
 
 	
@@ -54,11 +59,32 @@ bool HelloWorld::init()
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 2);
 
-	_tiledMap = TMXTiledMap::create("Map/testmap.tmx");
-	
-	this->addChild(_tiledMap,0);
-	//Size testMapSize = testMap->getContentSize();
+	for (int i = DIRECTION_1; i <= DIRECTION_9;++i)
+	{
+		_tiledMap.pushBack(TMXTiledMap::create("Map/testmap.tmx"));
+		_tiledMap.at(i)->setAnchorPoint(ccp(0.5, 0.5));
+		this->addChild(_tiledMap.at(i), 0);
+	}
+	{
+		auto centerPos = ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+		_sizeOfMap = _tiledMap.at(DIRECTION_N)->getContentSize();
+		_tiledMap.at(DIRECTION_N)->setPosition(centerPos);
+		_tiledMap.at(DIRECTION_1)->setPosition(centerPos + ccp(-1 * _sizeOfMap.width, -1 * _sizeOfMap.height));
+		_tiledMap.at(DIRECTION_2)->setPosition(centerPos + ccp(0, -1 * _sizeOfMap.height));
+		_tiledMap.at(DIRECTION_3)->setPosition(centerPos + ccp(1 * _sizeOfMap.width, -1 * _sizeOfMap.height));
+		_tiledMap.at(DIRECTION_4)->setPosition(centerPos + ccp(-1 * _sizeOfMap.width, 0));
+		_tiledMap.at(DIRECTION_6)->setPosition(centerPos + ccp(1 * _sizeOfMap.width, 0));
+		_tiledMap.at(DIRECTION_7)->setPosition(centerPos + ccp(-1 * _sizeOfMap.width, 1 * _sizeOfMap.height));
+		_tiledMap.at(DIRECTION_8)->setPosition(centerPos + ccp(0, 1 * _sizeOfMap.height));
+		_tiledMap.at(DIRECTION_9)->setPosition(centerPos + ccp(1 * _sizeOfMap.width, 1 * _sizeOfMap.height));
+	}
 	//log("Content size: %f, %f", testMapSize.width, testMapSize.height);
+
+	//이벤트디스패쳐
+	EventListenerKeyboard* keyListener = EventListenerKeyboard::create();
+	keyListener->onKeyPressed = CC_CALLBACK_2(HelloWorld::keyDownDispatcher, this);
+	keyListener->onKeyReleased = CC_CALLBACK_2(HelloWorld::keyReleaseDispatcher, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
 
 	this->scheduleUpdate();
     return true;
@@ -74,20 +100,51 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 #endif
 }
 
-void HelloWorld::setViewPointCenter(cocos2d::Point position)
-{
-	cocos2d::Size winSize = cocos2d::Director::sharedDirector()->getWinSize();
-	int x = MAX(position.x, winSize.width);
-	int y = MAX(position.y, winSize.height);
-	x = MIN(x, (_tiledMap->getMapSize().width * _tiledMap->getTileSize().width) - winSize.width / 2);
-	y = MIN(x, (_tiledMap->getMapSize().height * _tiledMap->getTileSize().height) - winSize.height / 2);
-	cocos2d::Point actualPosition = ccp(x, y);
-	cocos2d::Point centerOfView = ccp(winSize.width / 2, winSize.height / 2);
-	cocos2d::Point viewPoint = ccpSub(centerOfView, actualPosition);
-	this->setPosition(viewPoint);
-}
-
 void HelloWorld::update(float delta)
 {
-	this->setViewPointCenter(_sampleCharacter->getPosition());
+	moveCharacter();
+	//this->setViewPointCenter(_sampleCharacter->getPosition());
+}
+
+void HelloWorld::keyDownDispatcher(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event)
+{
+	_isKeyPressed[(unsigned)keyCode] = true;
+}
+
+void HelloWorld::keyReleaseDispatcher(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event)
+{
+	_isKeyPressed[(unsigned)keyCode] = false;
+}
+
+void HelloWorld::moveCharacter()
+{
+	defineCharacterDirection();
+
+	for (auto i : _tiledMap)
+	{
+		static float speed = 3.0f;
+		if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW])
+			i->setPosition(i->getPosition() + ccp(+speed, 0));
+		if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW])
+			i->setPosition(i->getPosition() + ccp(-speed, 0));
+		if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW])
+			i->setPosition(i->getPosition() + ccp(0, -speed));
+		if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW])
+			i->setPosition(i->getPosition() + ccp(0, speed));
+	}
+}
+
+void HelloWorld::defineCharacterDirection()
+{
+}
+
+void HelloWorld::mapLoader()
+{
+	Size mapSize = _tiledMap.at(DIRECTION_N)->getContentSize();
+
+}
+
+void HelloWorld::initializeMap()
+{
+	
 }
