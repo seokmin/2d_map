@@ -48,7 +48,13 @@
     <ClCompile Include="..\Classes\SingleTile.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\MapManager.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\NodeTileMap.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\HandleMap.cpp">
       <Filter>Map</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,7 +83,13 @@
     <ClInclude Include="..\Classes\SingleTile.h">
       <Filter>Map</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\MapManager.h">
+      <Filter>Map</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\NodeTileMap.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HandleMap.h">
       <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,10 +1,13 @@
 #pragma once
+#include "definition.h"
+
 class NodeTileMap
 {
 public:
-	NodeTileMap();
+	NodeTileMap(const std::string mapName,const std::string mapFilename);
 	~NodeTileMap();
+	std::string _mapName;
+	std::string _mapFileName;
 	cocos2d::TMXTiledMap* _tiledMap;
-
-	//cocos2d::Vector<NodeTileMap*>	nearNodes;
+	std::map<DirectionKind, NodeTileMap*> nearNodesMap;
 };

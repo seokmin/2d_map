@@ -2,6 +2,7 @@
 #include "HelloWorldScene.h"
 #include "SampleCharacter.h"
 #include "NodeTileMap.h"
+#include "MapManager.h"
 USING_NS_CC;
 
 Scene* HelloWorld::createScene()
@@ -35,9 +36,12 @@ bool HelloWorld::init()
 
     ////메인 부분
 
-	
+	MapManager::getInstance()->initialize();
+	_handleForMap = MapManager::getInstance()->loadZoneByNumber(6);
+	this->addChild(_handleForMap);
+
 	_sampleCharacter = new SampleCharacter();
-	_sampleCharacter->setPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	_sampleCharacter->setPosition(SCREEN_PIXEL_WIDTH / 2, SCREEN_PIXEL_HEIGHT / 2);
 	this->addChild(_sampleCharacter,1);
 
 
@@ -59,14 +63,14 @@ bool HelloWorld::init()
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 2);
 
-	for (int i = DIRECTION_1; i <= DIRECTION_9;++i)
+	/*for (int i = DIRECTION_1; i <= DIRECTION_9;++i)
 	{
 		_tiledMap.pushBack(TMXTiledMap::create("Map/testmap.tmx"));
 		_tiledMap.at(i)->setAnchorPoint(ccp(0.5, 0.5));
 		this->addChild(_tiledMap.at(i), 0);
 	}
 	{
-		auto centerPos = ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+		auto centerPos = ccp(SCREEN_PIXEL_WIDTH / 2, SCREEN_PIXEL_HEIGHT / 2);
 		_sizeOfMap = _tiledMap.at(DIRECTION_N)->getContentSize();
 		_tiledMap.at(DIRECTION_N)->setPosition(centerPos);
 		_tiledMap.at(DIRECTION_1)->setPosition(centerPos + ccp(-1 * _sizeOfMap.width, -1 * _sizeOfMap.height));
@@ -77,8 +81,11 @@ bool HelloWorld::init()
 		_tiledMap.at(DIRECTION_7)->setPosition(centerPos + ccp(-1 * _sizeOfMap.width, 1 * _sizeOfMap.height));
 		_tiledMap.at(DIRECTION_8)->setPosition(centerPos + ccp(0, 1 * _sizeOfMap.height));
 		_tiledMap.at(DIRECTION_9)->setPosition(centerPos + ccp(1 * _sizeOfMap.width, 1 * _sizeOfMap.height));
-	}
+	}*/
 	//log("Content size: %f, %f", testMapSize.width, testMapSize.height);
+
+
+
 
 	//이벤트디스패쳐
 	EventListenerKeyboard* keyListener = EventListenerKeyboard::create();
@@ -118,33 +125,15 @@ void HelloWorld::keyReleaseDispatcher(cocos2d::EventKeyboard::KeyCode keyCode, c
 
 void HelloWorld::moveCharacter()
 {
-	defineCharacterDirection();
-
-	for (auto i : _tiledMap)
-	{
+	
 		static float speed = 3.0f;
 		if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW])
-			i->setPosition(i->getPosition() + ccp(+speed, 0));
+			_handleForMap->setPosition(_handleForMap->getPosition() + ccp(+speed, 0));
 		if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW])
-			i->setPosition(i->getPosition() + ccp(-speed, 0));
+			_handleForMap->setPosition(_handleForMap->getPosition() + ccp(-speed, 0));
 		if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW])
-			i->setPosition(i->getPosition() + ccp(0, -speed));
+			_handleForMap->setPosition(_handleForMap->getPosition() + ccp(0, -speed));
 		if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW])
-			i->setPosition(i->getPosition() + ccp(0, speed));
-	}
-}
+			_handleForMap->setPosition(_handleForMap->getPosition() + ccp(0, speed));
 
-void HelloWorld::defineCharacterDirection()
-{
-}
-
-void HelloWorld::mapLoader()
-{
-	Size mapSize = _tiledMap.at(DIRECTION_N)->getContentSize();
-
-}
-
-void HelloWorld::initializeMap()
-{
-	
 }

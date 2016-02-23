@@ -2,8 +2,10 @@
 #include "NodeTileMap.h"
 
 
-NodeTileMap::NodeTileMap()
+NodeTileMap::NodeTileMap(const std::string mapName,const std::string mapFilename)
 {
+	_mapName = mapName;
+	_mapFileName = mapFilename;
 }
 
 

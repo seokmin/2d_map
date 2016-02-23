@@ -18,16 +18,11 @@ public:
 	void setViewPointCenter(cocos2d::Point position);
 
 private:
-	cocos2d::Vector<cocos2d::TMXTiledMap*>	_tiledMap;
-	cocos2d::Vector<cocos2d::TMXTiledMap*>	_tiledMapForPreLoad;
 	SampleCharacter*				_sampleCharacter;
 	void							update(float delta);
 	void							keyDownDispatcher(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event);
 	void							keyReleaseDispatcher(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event);
 	bool							_isKeyPressed[166/*Å°Á¾·ù*/];
 	void							moveCharacter();
-	void							defineCharacterDirection();
-	void							mapLoader();
-	cocos2d::Size					_sizeOfMap;
-	void							initializeMap();
+	Node*							_handleForMap = nullptr;
 };

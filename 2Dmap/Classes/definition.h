@@ -1,11 +1,9 @@
 #pragma once
-#define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 768
 
 /**
 키보드 우측 숫자패드가 방향 기준
 */
-enum directionKind{
+enum DirectionKind{
 	DIRECTION_1,
 	DIRECTION_2,
 	DIRECTION_3,
@@ -17,3 +15,8 @@ enum directionKind{
 	DIRECTION_9
 };
 #define MAX_DIRECTION DIRECTION_9+1
+
+static const unsigned SCREEN_PIXEL_WIDTH = 1024;
+static const unsigned SCREEN_PIXEL_HEIGHT = 768;
+static const unsigned WORLD_MAP_SIZE_WIDTH = 4;
+static const unsigned WORLD_MAP_SIZE_HEIGHT = 4;

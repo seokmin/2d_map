@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "main.h"
 #include "AppDelegate.h"
+#ifdef _DEBUG
 #include <vld.h>
-
+#endif
 USING_NS_CC;
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
