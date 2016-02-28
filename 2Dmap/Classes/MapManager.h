@@ -55,9 +55,10 @@ public:
 			_instance = new MapManager();
 		return _instance;
 	}
-	void initialize();
-	void loadZoneByName(const std::string zoneName);
-	Node* loadZoneByNumber(const int zoneNumber);
+	void	initialize();
+	void	loadZoneByName(const std::string zoneName);
+	Node*	loadZoneByNumber(const int zoneNumber);
+	void reload(DirectionKind newZoneDirection);
 
 private:
 	MapManager();
@@ -66,4 +67,5 @@ private:
 	std::map<int, NodeTileMap*>				_mapsForNodesWithIndex;
 	std::map<DirectionKind, NodeTileMap*>	_nineZones;
 	Node*									_handle = nullptr;
+	void									reposition();
 };

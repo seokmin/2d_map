@@ -84,7 +84,7 @@ bool HelloWorld::init()
 	}*/
 	//log("Content size: %f, %f", testMapSize.width, testMapSize.height);
 
-
+	
 
 
 	//이벤트디스패쳐
@@ -92,6 +92,8 @@ bool HelloWorld::init()
 	keyListener->onKeyPressed = CC_CALLBACK_2(HelloWorld::keyDownDispatcher, this);
 	keyListener->onKeyReleased = CC_CALLBACK_2(HelloWorld::keyReleaseDispatcher, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
+
+	MapManager::getInstance()->reload(DIRECTION_6);
 
 	this->scheduleUpdate();
     return true;
