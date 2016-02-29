@@ -93,8 +93,6 @@ bool HelloWorld::init()
 	keyListener->onKeyReleased = CC_CALLBACK_2(HelloWorld::keyReleaseDispatcher, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
 
-	MapManager::getInstance()->reload(DIRECTION_6);
-
 	this->scheduleUpdate();
     return true;
 }
@@ -112,7 +110,18 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 void HelloWorld::update(float delta)
 {
 	moveCharacter();
-	//this->setViewPointCenter(_sampleCharacter->getPosition());
+	Size mapSize = MapManager::getInstance()->getSizeOfMapPixel();
+	Vec2 mapPosition = MapManager::getInstance()->getPositionOfCenterMap();
+	Vec2 charPosition = _sampleCharacter->getPosition();
+
+	if (charPosition.x >= mapSize.width / 2 + mapPosition.x)
+		MapManager::getInstance()->reload(DIRECTION_6);
+	else if (charPosition.x <= mapPosition.x - mapSize.width / 2)
+		MapManager::getInstance()->reload(DIRECTION_4);
+	else if (charPosition.y >= mapPosition.y + mapSize.height / 2)
+		MapManager::getInstance()->reload(DIRECTION_8);
+	else if (charPosition.y <= mapPosition.y - mapSize.height / 2)
+		MapManager::getInstance()->reload(DIRECTION_2);
 }
 
 void HelloWorld::keyDownDispatcher(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event)

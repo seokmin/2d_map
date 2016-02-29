@@ -103,12 +103,18 @@ Node* MapManager::loadZoneByNumber(const int zoneNumber)
 	_nineZones[DIRECTION_7] = centerZone->nearNodesMap[DIRECTION_7];
 	_nineZones[DIRECTION_8] = centerZone->nearNodesMap[DIRECTION_8];
 	_nineZones[DIRECTION_9] = centerZone->nearNodesMap[DIRECTION_9];
-
+	
 	for (int i = (int)DIRECTION_1; i <= (int)DIRECTION_9; ++i)
 	{
 		_nineZones[(DirectionKind)i]->_tiledMap = TMXTiledMap::create(_nineZones[(DirectionKind)i]->_mapFileName);
 		_handle->addChild(_nineZones[(DirectionKind)i]->_tiledMap);
 	}
+
+	for (int i = DIRECTION_1; i <= DIRECTION_9; ++i)
+	{
+		_nineZones[(DirectionKind)i]->_tiledMap->setAnchorPoint(ccp(0.5, 0.5));
+	}
+
 	reposition();
 
 	return _handle;
@@ -119,6 +125,8 @@ Node* MapManager::loadZoneByNumber(const int zoneNumber)
 void MapManager::reload(DirectionKind newZoneDirection)
 {
 	NodeTileMap* newCenterZone = _nineZones[newZoneDirection];
+
+	//생 노가다 코드..
 	switch (newZoneDirection)
 	{
 	case DIRECTION_N:
@@ -126,10 +134,56 @@ void MapManager::reload(DirectionKind newZoneDirection)
 	case DIRECTION_1:
 		break;
 	case DIRECTION_2:
+		_handle->removeChild(_nineZones[DIRECTION_1]->_tiledMap);
+		_handle->removeChild(_nineZones[DIRECTION_2]->_tiledMap);
+		_handle->removeChild(_nineZones[DIRECTION_3]->_tiledMap);
+		delete _nineZones[DIRECTION_1];
+		delete _nineZones[DIRECTION_2];
+		delete _nineZones[DIRECTION_3];
+		_nineZones[DIRECTION_1] = _nineZones[DIRECTION_4];
+		_nineZones[DIRECTION_2] = _nineZones[DIRECTION_N];
+		_nineZones[DIRECTION_3] = _nineZones[DIRECTION_6];
+		_nineZones[DIRECTION_4] = _nineZones[DIRECTION_7];
+		_nineZones[DIRECTION_N] = _nineZones[DIRECTION_8];
+		_nineZones[DIRECTION_6] = _nineZones[DIRECTION_9];
+
+		_nineZones[DIRECTION_1] = newCenterZone->nearNodesMap[DIRECTION_1];
+		_nineZones[DIRECTION_2] = newCenterZone->nearNodesMap[DIRECTION_2];
+		_nineZones[DIRECTION_3] = newCenterZone->nearNodesMap[DIRECTION_3];
+
+		_nineZones[DIRECTION_1]->_tiledMap = TMXTiledMap::create(_nineZones[DIRECTION_1]->_mapFileName);
+		_nineZones[DIRECTION_2]->_tiledMap = TMXTiledMap::create(_nineZones[DIRECTION_2]->_mapFileName);
+		_nineZones[DIRECTION_3]->_tiledMap = TMXTiledMap::create(_nineZones[DIRECTION_3]->_mapFileName);
+		_handle->addChild(_nineZones[DIRECTION_1]->_tiledMap);
+		_handle->addChild(_nineZones[DIRECTION_2]->_tiledMap);
+		_handle->addChild(_nineZones[DIRECTION_3]->_tiledMap);
 		break;
 	case DIRECTION_3:
 		break;
 	case DIRECTION_4:
+		_handle->removeChild(_nineZones[DIRECTION_3]->_tiledMap);
+		_handle->removeChild(_nineZones[DIRECTION_6]->_tiledMap);
+		_handle->removeChild(_nineZones[DIRECTION_9]->_tiledMap);
+		delete _nineZones[DIRECTION_3];
+		delete _nineZones[DIRECTION_6];
+		delete _nineZones[DIRECTION_9];
+		_nineZones[DIRECTION_3] = _nineZones[DIRECTION_2];
+		_nineZones[DIRECTION_6] = _nineZones[DIRECTION_N];
+		_nineZones[DIRECTION_9] = _nineZones[DIRECTION_8];
+		_nineZones[DIRECTION_2] = _nineZones[DIRECTION_1];
+		_nineZones[DIRECTION_N] = _nineZones[DIRECTION_4];
+		_nineZones[DIRECTION_8] = _nineZones[DIRECTION_7];
+
+		_nineZones[DIRECTION_1] = newCenterZone->nearNodesMap[DIRECTION_1];
+		_nineZones[DIRECTION_4] = newCenterZone->nearNodesMap[DIRECTION_4];
+		_nineZones[DIRECTION_7] = newCenterZone->nearNodesMap[DIRECTION_7];
+
+		_nineZones[DIRECTION_1]->_tiledMap = TMXTiledMap::create(_nineZones[DIRECTION_1]->_mapFileName);
+		_nineZones[DIRECTION_4]->_tiledMap = TMXTiledMap::create(_nineZones[DIRECTION_4]->_mapFileName);
+		_nineZones[DIRECTION_7]->_tiledMap = TMXTiledMap::create(_nineZones[DIRECTION_7]->_mapFileName);
+		_handle->addChild(_nineZones[DIRECTION_1]->_tiledMap);
+		_handle->addChild(_nineZones[DIRECTION_4]->_tiledMap);
+		_handle->addChild(_nineZones[DIRECTION_7]->_tiledMap);
 		break;
 	case DIRECTION_6:
 		_handle->removeChild(_nineZones[DIRECTION_1]->_tiledMap);
@@ -155,21 +209,47 @@ void MapManager::reload(DirectionKind newZoneDirection)
 		_handle->addChild(_nineZones[DIRECTION_3]->_tiledMap);
 		_handle->addChild(_nineZones[DIRECTION_6]->_tiledMap);
 		_handle->addChild(_nineZones[DIRECTION_9]->_tiledMap);
-		reposition();
 		break;
 	case DIRECTION_7:
 		break;
 	case DIRECTION_8:
+		_handle->removeChild(_nineZones[DIRECTION_7]->_tiledMap);
+		_handle->removeChild(_nineZones[DIRECTION_8]->_tiledMap);
+		_handle->removeChild(_nineZones[DIRECTION_9]->_tiledMap);
+		delete _nineZones[DIRECTION_7];
+		delete _nineZones[DIRECTION_8];
+		delete _nineZones[DIRECTION_9];
+		_nineZones[DIRECTION_7] = _nineZones[DIRECTION_4];
+		_nineZones[DIRECTION_8] = _nineZones[DIRECTION_N];
+		_nineZones[DIRECTION_9] = _nineZones[DIRECTION_6];
+		_nineZones[DIRECTION_4] = _nineZones[DIRECTION_1];
+		_nineZones[DIRECTION_N] = _nineZones[DIRECTION_2];
+		_nineZones[DIRECTION_6] = _nineZones[DIRECTION_3];
+
+		_nineZones[DIRECTION_7] = newCenterZone->nearNodesMap[DIRECTION_7];
+		_nineZones[DIRECTION_8] = newCenterZone->nearNodesMap[DIRECTION_8];
+		_nineZones[DIRECTION_9] = newCenterZone->nearNodesMap[DIRECTION_9];
+
+		_nineZones[DIRECTION_7]->_tiledMap = TMXTiledMap::create(_nineZones[DIRECTION_7]->_mapFileName);
+		_nineZones[DIRECTION_8]->_tiledMap = TMXTiledMap::create(_nineZones[DIRECTION_8]->_mapFileName);
+		_nineZones[DIRECTION_9]->_tiledMap = TMXTiledMap::create(_nineZones[DIRECTION_9]->_mapFileName);
+		_handle->addChild(_nineZones[DIRECTION_7]->_tiledMap);
+		_handle->addChild(_nineZones[DIRECTION_8]->_tiledMap);
+		_handle->addChild(_nineZones[DIRECTION_9]->_tiledMap);
 		break;
 	case DIRECTION_9:
 		break;
 	}
 
+	reposition();
 }
 
+/**
+	가운데 칸을 중심으로 맵을 정렬한다.
+*/
 void MapManager::reposition()
 {
-	auto centerPos = ccp(SCREEN_PIXEL_WIDTH / 2, SCREEN_PIXEL_HEIGHT / 2);
+	auto centerPos = _nineZones[DIRECTION_N]->_tiledMap->getPosition();
 	Size sizeOfMap = _nineZones[DIRECTION_N]->_tiledMap->getContentSize();
 	_nineZones[DIRECTION_N]->_tiledMap->setPosition(centerPos);
 	_nineZones[DIRECTION_1]->_tiledMap->setPosition(centerPos + ccp(-1 * sizeOfMap.width, -1 * sizeOfMap.height));
@@ -180,4 +260,18 @@ void MapManager::reposition()
 	_nineZones[DIRECTION_7]->_tiledMap->setPosition(centerPos + ccp(-1 * sizeOfMap.width, 1 * sizeOfMap.height));
 	_nineZones[DIRECTION_8]->_tiledMap->setPosition(centerPos + ccp(0, 1 * sizeOfMap.height));
 	_nineZones[DIRECTION_9]->_tiledMap->setPosition(centerPos + ccp(1 * sizeOfMap.width, 1 * sizeOfMap.height));
+	for (int i = DIRECTION_1; i <= DIRECTION_9; ++i)
+	{
+		_nineZones[(DirectionKind)i]->_tiledMap->setAnchorPoint(ccp(0.5, 0.5));
+	}
+}
+
+Size MapManager::getSizeOfMapPixel()
+{
+	return _nineZones[DIRECTION_N]->_tiledMap->getContentSize();
+}
+
+cocos2d::Vec2 MapManager::getPositionOfCenterMap()
+{
+	return _nineZones[DIRECTION_N]->_tiledMap->getPosition();
 }

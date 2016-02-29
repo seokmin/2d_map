@@ -2,7 +2,7 @@
 #include "main.h"
 #include "AppDelegate.h"
 #ifdef _DEBUG
-#include <vld.h>
+//#include <vld.h>
 #endif
 USING_NS_CC;
 

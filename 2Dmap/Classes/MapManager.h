@@ -58,13 +58,18 @@ public:
 	void	initialize();
 	void	loadZoneByName(const std::string zoneName);
 	Node*	loadZoneByNumber(const int zoneNumber);
-	void reload(DirectionKind newZoneDirection);
+	void	reload(DirectionKind newZoneDirection);
+	Size	getSizeOfMapPixel();
+	Vec2	getPositionOfCenterMap();
 
 private:
 	MapManager();
 	MapManager(const MapManager& other);
 	static MapManager*						_instance;
 	std::map<int, NodeTileMap*>				_mapsForNodesWithIndex;
+	/**
+		현재 메모리에 올라있는 9개의 칸
+	*/
 	std::map<DirectionKind, NodeTileMap*>	_nineZones;
 	Node*									_handle = nullptr;
 	void									reposition();
