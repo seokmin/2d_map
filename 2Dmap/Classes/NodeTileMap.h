@@ -10,4 +10,5 @@ public:
 	std::string _mapFileName;
 	cocos2d::TMXTiledMap* _tiledMap;
 	std::map<DirectionKind, NodeTileMap*> nearNodesMap;
+	bool isLoading = false;
 };

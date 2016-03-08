@@ -7,34 +7,34 @@ USING_NS_CC;
 
 Scene* HelloWorld::createScene()
 {
-    // 'scene' is an autorelease object
-    auto scene = Scene::create();
-    
-    // 'layer' is an autorelease object
-    auto layer = HelloWorld::create();
+	// 'scene' is an autorelease object
+	auto scene = Scene::create();
 
-    // add layer as a child to scene
-    scene->addChild(layer);
+	// 'layer' is an autorelease object
+	auto layer = HelloWorld::create();
 
-    // return the scene
-    return scene;
+	// add layer as a child to scene
+	scene->addChild(layer);
+
+	// return the scene
+	return scene;
 }
 
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
-    //////////////////////////////
-    // 1. super init first
-    if ( !Layer::init() )
-    {
-        return false;
-    }
+	//////////////////////////////
+	// 1. super init first
+	if (!Layer::init())
+	{
+		return false;
+	}
 
 	//초기화
-	for (auto i = _isKeyPressed; i < _isKeyPressed + sizeof(_isKeyPressed) / sizeof(bool);++i)
+	for (auto i = _isKeyPressed; i < _isKeyPressed + sizeof(_isKeyPressed) / sizeof(bool); ++i)
 		*i = false;
 
-    ////메인 부분
+	////메인 부분
 
 	MapManager::getInstance()->initialize();
 	_handleForMap = MapManager::getInstance()->loadZoneByNumber(6);
@@ -42,49 +42,49 @@ bool HelloWorld::init()
 
 	_sampleCharacter = new SampleCharacter();
 	_sampleCharacter->setPosition(SCREEN_PIXEL_WIDTH / 2, SCREEN_PIXEL_HEIGHT / 2);
-	this->addChild(_sampleCharacter,1);
+	this->addChild(_sampleCharacter, 1);
 
 
 	///////////////////
 
 
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	//Close 부분
-    auto closeItem = MenuItemImage::create(
-                                           "CloseNormal.png",
-                                           "CloseSelected.png",
-                                           CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
-    
-	closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width/2 ,
-                                origin.y + closeItem->getContentSize().height/2));
-    auto menu = Menu::create(closeItem, NULL);
-    menu->setPosition(Vec2::ZERO);
-    this->addChild(menu, 2);
+	auto closeItem = MenuItemImage::create(
+		"CloseNormal.png",
+		"CloseSelected.png",
+		CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+
+	closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width / 2,
+		origin.y + closeItem->getContentSize().height / 2));
+	auto menu = Menu::create(closeItem, NULL);
+	menu->setPosition(Vec2::ZERO);
+	this->addChild(menu, 2);
 
 	/*for (int i = DIRECTION_1; i <= DIRECTION_9;++i)
 	{
-		_tiledMap.pushBack(TMXTiledMap::create("Map/testmap.tmx"));
-		_tiledMap.at(i)->setAnchorPoint(ccp(0.5, 0.5));
-		this->addChild(_tiledMap.at(i), 0);
+	_tiledMap.pushBack(TMXTiledMap::create("Map/testmap.tmx"));
+	_tiledMap.at(i)->setAnchorPoint(ccp(0.5, 0.5));
+	this->addChild(_tiledMap.at(i), 0);
 	}
 	{
-		auto centerPos = ccp(SCREEN_PIXEL_WIDTH / 2, SCREEN_PIXEL_HEIGHT / 2);
-		_sizeOfMap = _tiledMap.at(DIRECTION_N)->getContentSize();
-		_tiledMap.at(DIRECTION_N)->setPosition(centerPos);
-		_tiledMap.at(DIRECTION_1)->setPosition(centerPos + ccp(-1 * _sizeOfMap.width, -1 * _sizeOfMap.height));
-		_tiledMap.at(DIRECTION_2)->setPosition(centerPos + ccp(0, -1 * _sizeOfMap.height));
-		_tiledMap.at(DIRECTION_3)->setPosition(centerPos + ccp(1 * _sizeOfMap.width, -1 * _sizeOfMap.height));
-		_tiledMap.at(DIRECTION_4)->setPosition(centerPos + ccp(-1 * _sizeOfMap.width, 0));
-		_tiledMap.at(DIRECTION_6)->setPosition(centerPos + ccp(1 * _sizeOfMap.width, 0));
-		_tiledMap.at(DIRECTION_7)->setPosition(centerPos + ccp(-1 * _sizeOfMap.width, 1 * _sizeOfMap.height));
-		_tiledMap.at(DIRECTION_8)->setPosition(centerPos + ccp(0, 1 * _sizeOfMap.height));
-		_tiledMap.at(DIRECTION_9)->setPosition(centerPos + ccp(1 * _sizeOfMap.width, 1 * _sizeOfMap.height));
+	auto centerPos = ccp(SCREEN_PIXEL_WIDTH / 2, SCREEN_PIXEL_HEIGHT / 2);
+	_sizeOfMap = _tiledMap.at(DIRECTION_N)->getContentSize();
+	_tiledMap.at(DIRECTION_N)->setPosition(centerPos);
+	_tiledMap.at(DIRECTION_1)->setPosition(centerPos + ccp(-1 * _sizeOfMap.width, -1 * _sizeOfMap.height));
+	_tiledMap.at(DIRECTION_2)->setPosition(centerPos + ccp(0, -1 * _sizeOfMap.height));
+	_tiledMap.at(DIRECTION_3)->setPosition(centerPos + ccp(1 * _sizeOfMap.width, -1 * _sizeOfMap.height));
+	_tiledMap.at(DIRECTION_4)->setPosition(centerPos + ccp(-1 * _sizeOfMap.width, 0));
+	_tiledMap.at(DIRECTION_6)->setPosition(centerPos + ccp(1 * _sizeOfMap.width, 0));
+	_tiledMap.at(DIRECTION_7)->setPosition(centerPos + ccp(-1 * _sizeOfMap.width, 1 * _sizeOfMap.height));
+	_tiledMap.at(DIRECTION_8)->setPosition(centerPos + ccp(0, 1 * _sizeOfMap.height));
+	_tiledMap.at(DIRECTION_9)->setPosition(centerPos + ccp(1 * _sizeOfMap.width, 1 * _sizeOfMap.height));
 	}*/
 	//log("Content size: %f, %f", testMapSize.width, testMapSize.height);
 
-	
+
 
 
 	//이벤트디스패쳐
@@ -94,33 +94,34 @@ bool HelloWorld::init()
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
 
 	this->scheduleUpdate();
-    return true;
+	return true;
 }
 
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {
-    Director::getInstance()->end();
+	Director::getInstance()->end();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
+	exit(0);
 #endif
 }
 
 void HelloWorld::update(float delta)
 {
+
 	moveCharacter();
 	Size mapSize = MapManager::getInstance()->getSizeOfMapPixel();
-	Vec2 mapPosition = MapManager::getInstance()->getPositionOfCenterMap();
+	Vec2 mapPosition = _handleForMap->getPosition();
 	Vec2 charPosition = _sampleCharacter->getPosition();
 
-	if (charPosition.x >= mapSize.width / 2 + mapPosition.x)
+	if (mapPosition.x < 0)
 		MapManager::getInstance()->reload(DIRECTION_6);
-	else if (charPosition.x <= mapPosition.x - mapSize.width / 2)
+	else if (mapPosition.x> SCREEN_PIXEL_WIDTH)
 		MapManager::getInstance()->reload(DIRECTION_4);
-	else if (charPosition.y >= mapPosition.y + mapSize.height / 2)
+	else if (mapPosition.y < 0)
 		MapManager::getInstance()->reload(DIRECTION_8);
-	else if (charPosition.y <= mapPosition.y - mapSize.height / 2)
+	else if (charPosition.y > SCREEN_PIXEL_HEIGHT)
 		MapManager::getInstance()->reload(DIRECTION_2);
 }
 
@@ -136,15 +137,15 @@ void HelloWorld::keyReleaseDispatcher(cocos2d::EventKeyboard::KeyCode keyCode, c
 
 void HelloWorld::moveCharacter()
 {
-	
-		static float speed = 3.0f;
-		if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW])
-			_handleForMap->setPosition(_handleForMap->getPosition() + ccp(+speed, 0));
-		if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW])
-			_handleForMap->setPosition(_handleForMap->getPosition() + ccp(-speed, 0));
-		if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW])
-			_handleForMap->setPosition(_handleForMap->getPosition() + ccp(0, -speed));
-		if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW])
-			_handleForMap->setPosition(_handleForMap->getPosition() + ccp(0, speed));
+
+	static float speed = 3.0f;
+	if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW])
+		_handleForMap->setPosition(_handleForMap->getPosition() + ccp(+speed, 0));
+	if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW])
+		_handleForMap->setPosition(_handleForMap->getPosition() + ccp(-speed, 0));
+	if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW])
+		_handleForMap->setPosition(_handleForMap->getPosition() + ccp(0, -speed));
+	if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW])
+		_handleForMap->setPosition(_handleForMap->getPosition() + ccp(0, speed));
 
 }

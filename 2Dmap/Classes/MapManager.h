@@ -61,7 +61,7 @@ public:
 	void	reload(DirectionKind newZoneDirection);
 	Size	getSizeOfMapPixel();
 	Vec2	getPositionOfCenterMap();
-
+	bool	isLoading();
 private:
 	MapManager();
 	MapManager(const MapManager& other);
@@ -73,4 +73,5 @@ private:
 	std::map<DirectionKind, NodeTileMap*>	_nineZones;
 	Node*									_handle = nullptr;
 	void									reposition();
+	bool									_isLoading = false;
 };

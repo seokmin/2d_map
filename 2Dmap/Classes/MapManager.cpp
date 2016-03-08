@@ -88,6 +88,10 @@ void MapManager::initialize()
 		if (nearNdMap.find(DIRECTION_N) == nearNdMap.end())
 			nearNdMap[DIRECTION_N] = _mapsForNodesWithIndex[i];
 	}
+
+	//_tiledMap ÃÊ±âÈ­
+	for (auto i = _mapsForNodesWithIndex.begin(); i != _mapsForNodesWithIndex.end(); ++i)
+		i->second->_tiledMap = nullptr;
 }
 
 Node* MapManager::loadZoneByNumber(const int zoneNumber)
@@ -114,8 +118,10 @@ Node* MapManager::loadZoneByNumber(const int zoneNumber)
 	{
 		_nineZones[(DirectionKind)i]->_tiledMap->setAnchorPoint(ccp(0.5, 0.5));
 	}
-
+	_nineZones[DIRECTION_N]->_tiledMap->setPosition(ccp(0,0));
 	reposition();
+
+	_handle->setPosition(ccp(SCREEN_PIXEL_WIDTH/2,SCREEN_PIXEL_HEIGHT/2));
 
 	return _handle;
 }
@@ -137,9 +143,9 @@ void MapManager::reload(DirectionKind newZoneDirection)
 		_handle->removeChild(_nineZones[DIRECTION_1]->_tiledMap);
 		_handle->removeChild(_nineZones[DIRECTION_2]->_tiledMap);
 		_handle->removeChild(_nineZones[DIRECTION_3]->_tiledMap);
-		delete _nineZones[DIRECTION_1];
-		delete _nineZones[DIRECTION_2];
-		delete _nineZones[DIRECTION_3];
+		_nineZones.erase(DIRECTION_1);
+		_nineZones.erase(DIRECTION_2);
+		_nineZones.erase(DIRECTION_3);
 		_nineZones[DIRECTION_1] = _nineZones[DIRECTION_4];
 		_nineZones[DIRECTION_2] = _nineZones[DIRECTION_N];
 		_nineZones[DIRECTION_3] = _nineZones[DIRECTION_6];
@@ -164,9 +170,9 @@ void MapManager::reload(DirectionKind newZoneDirection)
 		_handle->removeChild(_nineZones[DIRECTION_3]->_tiledMap);
 		_handle->removeChild(_nineZones[DIRECTION_6]->_tiledMap);
 		_handle->removeChild(_nineZones[DIRECTION_9]->_tiledMap);
-		delete _nineZones[DIRECTION_3];
-		delete _nineZones[DIRECTION_6];
-		delete _nineZones[DIRECTION_9];
+		_nineZones.erase(DIRECTION_3);
+		_nineZones.erase(DIRECTION_6);
+		_nineZones.erase(DIRECTION_9);
 		_nineZones[DIRECTION_3] = _nineZones[DIRECTION_2];
 		_nineZones[DIRECTION_6] = _nineZones[DIRECTION_N];
 		_nineZones[DIRECTION_9] = _nineZones[DIRECTION_8];
@@ -189,9 +195,9 @@ void MapManager::reload(DirectionKind newZoneDirection)
 		_handle->removeChild(_nineZones[DIRECTION_1]->_tiledMap);
 		_handle->removeChild(_nineZones[DIRECTION_4]->_tiledMap);
 		_handle->removeChild(_nineZones[DIRECTION_7]->_tiledMap);
-		delete _nineZones[DIRECTION_1];
-		delete _nineZones[DIRECTION_4];
-		delete _nineZones[DIRECTION_7];
+		_nineZones.erase(DIRECTION_1);
+		_nineZones.erase(DIRECTION_4);
+		_nineZones.erase(DIRECTION_7);
 		_nineZones[DIRECTION_1] = _nineZones[DIRECTION_2];
 		_nineZones[DIRECTION_4] = _nineZones[DIRECTION_N];
 		_nineZones[DIRECTION_7] = _nineZones[DIRECTION_8];
@@ -216,9 +222,9 @@ void MapManager::reload(DirectionKind newZoneDirection)
 		_handle->removeChild(_nineZones[DIRECTION_7]->_tiledMap);
 		_handle->removeChild(_nineZones[DIRECTION_8]->_tiledMap);
 		_handle->removeChild(_nineZones[DIRECTION_9]->_tiledMap);
-		delete _nineZones[DIRECTION_7];
-		delete _nineZones[DIRECTION_8];
-		delete _nineZones[DIRECTION_9];
+		_nineZones.erase(DIRECTION_7);
+		_nineZones.erase(DIRECTION_8);
+		_nineZones.erase(DIRECTION_9);
 		_nineZones[DIRECTION_7] = _nineZones[DIRECTION_4];
 		_nineZones[DIRECTION_8] = _nineZones[DIRECTION_N];
 		_nineZones[DIRECTION_9] = _nineZones[DIRECTION_6];
@@ -274,4 +280,13 @@ Size MapManager::getSizeOfMapPixel()
 cocos2d::Vec2 MapManager::getPositionOfCenterMap()
 {
 	return _nineZones[DIRECTION_N]->_tiledMap->getPosition();
+}
+
+bool MapManager::isLoading()
+{
+// 	for (auto i : _nineZones)
+// 	{
+// 		i.second->
+// 	}
+	return true;
 }
