@@ -18,5 +18,5 @@ enum DirectionKind{
 
 static const unsigned SCREEN_PIXEL_WIDTH = 1024;
 static const unsigned SCREEN_PIXEL_HEIGHT = 768;
-static const unsigned WORLD_MAP_SIZE_WIDTH = 4;
-static const unsigned WORLD_MAP_SIZE_HEIGHT = 4;
+static const unsigned WORLD_MAP_SIZE_WIDTH = 6;
+static const unsigned WORLD_MAP_SIZE_HEIGHT = 6;

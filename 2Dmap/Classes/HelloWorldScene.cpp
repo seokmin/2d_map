@@ -112,7 +112,7 @@ void HelloWorld::update(float delta)
 
 	moveCharacter();
 	Size mapSize = MapManager::getInstance()->getSizeOfMapPixel();
-	Vec2 mapPosition = _handleForMap->getPosition();
+	Vec2 mapPosition = MapManager::getInstance()->getPositionOfCenterMap();
 	Vec2 charPosition = _sampleCharacter->getPosition();
 
 	if (mapPosition.x < 0)
@@ -121,7 +121,7 @@ void HelloWorld::update(float delta)
 		MapManager::getInstance()->reload(DIRECTION_4);
 	else if (mapPosition.y < 0)
 		MapManager::getInstance()->reload(DIRECTION_8);
-	else if (charPosition.y > SCREEN_PIXEL_HEIGHT)
+	else if (mapPosition.y > SCREEN_PIXEL_HEIGHT)
 		MapManager::getInstance()->reload(DIRECTION_2);
 }
 
@@ -140,12 +140,12 @@ void HelloWorld::moveCharacter()
 
 	static float speed = 3.0f;
 	if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW])
-		_handleForMap->setPosition(_handleForMap->getPosition() + ccp(+speed, 0));
+		MapManager::getInstance()->moveNineMaps(ccp(+speed, 0));
 	if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW])
-		_handleForMap->setPosition(_handleForMap->getPosition() + ccp(-speed, 0));
+		MapManager::getInstance()->moveNineMaps(ccp(-speed, 0));
 	if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW])
-		_handleForMap->setPosition(_handleForMap->getPosition() + ccp(0, -speed));
+		MapManager::getInstance()->moveNineMaps(ccp(0, -speed));
 	if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW])
-		_handleForMap->setPosition(_handleForMap->getPosition() + ccp(0, speed));
+		MapManager::getInstance()->moveNineMaps(ccp(0, +speed));
 
 }

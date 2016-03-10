@@ -21,7 +21,27 @@ static const std::string WORLD_MAP_FILENAMES[WORLD_MAP_SIZE_WIDTH*WORLD_MAP_SIZE
 	"Map/13.tmx",
 	"Map/14.tmx",
 	"Map/15.tmx",
-	"Map/16.tmx"
+	"Map/16.tmx",
+	"Map/17.tmx",
+	"Map/18.tmx",
+	"Map/19.tmx",
+	"Map/20.tmx",
+	"Map/21.tmx",
+	"Map/22.tmx",
+	"Map/23.tmx",
+	"Map/24.tmx",
+	"Map/25.tmx",
+	"Map/26.tmx",
+	"Map/27.tmx",
+	"Map/28.tmx",
+	"Map/29.tmx",
+	"Map/30.tmx",
+	"Map/31.tmx",
+	"Map/32.tmx",
+	"Map/33.tmx",
+	"Map/34.tmx",
+	"Map/35.tmx",
+	"Map/36.tmx"
 };
 static const std::string WORLD_MAP_NAMES[WORLD_MAP_SIZE_WIDTH*WORLD_MAP_SIZE_HEIGHT] = {
 	"Map1",
@@ -39,7 +59,27 @@ static const std::string WORLD_MAP_NAMES[WORLD_MAP_SIZE_WIDTH*WORLD_MAP_SIZE_HEI
 	"Map13",
 	"Map14",
 	"Map15",
-	"Map16"
+	"Map16",
+	"Map17",
+	"Map18",
+	"Map19",
+	"Map20",
+	"Map21",
+	"Map22",
+	"Map23",
+	"Map24",
+	"Map25",
+	"Map26",
+	"Map27",
+	"Map28",
+	"Map29",
+	"Map30",
+	"Map31",
+	"Map32",
+	"Map33",
+	"Map34",
+	"Map35",
+	"Map36"
 };
 
 class NodeTileMap;
@@ -61,6 +101,7 @@ public:
 	void	reload(DirectionKind newZoneDirection);
 	Size	getSizeOfMapPixel();
 	Vec2	getPositionOfCenterMap();
+	void moveNineMaps(Vec2 vec);
 	bool	isLoading();
 private:
 	MapManager();
