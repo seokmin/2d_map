@@ -37,7 +37,7 @@ bool HelloWorld::init()
 	////메인 부분
 
 	MapManager::getInstance()->initialize();
-	_handleForMap = MapManager::getInstance()->loadZoneByNumber(6);
+	_handleForMap = MapManager::getInstance()->loadZoneByNumber(15);
 	this->addChild(_handleForMap);
 
 	_sampleCharacter = new SampleCharacter();
@@ -115,13 +115,13 @@ void HelloWorld::update(float delta)
 	Vec2 mapPosition = MapManager::getInstance()->getPositionOfCenterMap();
 	Vec2 charPosition = _sampleCharacter->getPosition();
 
-	if (mapPosition.x < 0)
+	if (mapPosition.x + mapSize.width/2 < charPosition.x)
 		MapManager::getInstance()->reload(DIRECTION_6);
-	else if (mapPosition.x> SCREEN_PIXEL_WIDTH)
+	else if (mapPosition.x - mapSize.width/2> charPosition.x)
 		MapManager::getInstance()->reload(DIRECTION_4);
-	else if (mapPosition.y < 0)
+	else if (mapPosition.y + mapSize.height/2 < charPosition.y)
 		MapManager::getInstance()->reload(DIRECTION_8);
-	else if (mapPosition.y > SCREEN_PIXEL_HEIGHT)
+	else if (mapPosition.y - mapSize.height/2 > charPosition.y)
 		MapManager::getInstance()->reload(DIRECTION_2);
 }
 

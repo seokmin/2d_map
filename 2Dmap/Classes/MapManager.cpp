@@ -34,6 +34,133 @@ void MapManager::initialize()
 		}
 	}
 	//외곽선을 nullptr로 채우기 위한 루프
+		for (int i = 0; i < WORLD_MAP_SIZE_HEIGHT; ++i)
+		{
+			for (int j = 0; j < WORLD_MAP_SIZE_WIDTH; ++j)
+			{
+				int posNum = WORLD_MAP_SIZE_WIDTH*i + j;
+				if (posNum % WORLD_MAP_SIZE_WIDTH == 0)//가장 왼쪽 줄이면
+				{
+					_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_1] = nullptr;
+					_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_4] = nullptr;
+					_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_7] = nullptr;
+				}
+				if ((posNum + 1) % WORLD_MAP_SIZE_WIDTH == 0)//가장 오른쪽 줄이면
+				{
+					_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_3] = nullptr;
+					_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_6] = nullptr;
+					_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_9] = nullptr;
+				}
+				if (posNum < WORLD_MAP_SIZE_WIDTH)//가장 아랫쪽 줄이면
+				{
+					_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_1] = nullptr;
+					_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_2] = nullptr;
+					_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_3] = nullptr;
+				}
+				if (posNum >= WORLD_MAP_SIZE_HEIGHT*WORLD_MAP_SIZE_WIDTH - WORLD_MAP_SIZE_WIDTH)//가장 윗쪽 줄이면
+				{
+					_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_7] = nullptr;
+					_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_8] = nullptr;
+					_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_9] = nullptr;
+				}
+			}
+ 		}
+	//그래프를 그려보자.
+	for (unsigned i = 0; i < WORLD_MAP_SIZE_WIDTH*WORLD_MAP_SIZE_HEIGHT; ++i)
+	{
+		auto& currentNearNodeMap = _mapsForNodesWithIndex[i]->nearNodesMap;
+		if (currentNearNodeMap.find(DIRECTION_1) == currentNearNodeMap.end())//이미 값이 들어있지 않은 경우
+			currentNearNodeMap[DIRECTION_1] = _mapsForNodesWithIndex[i - WORLD_MAP_SIZE_WIDTH - 1];
+		if (currentNearNodeMap.find(DIRECTION_2) == currentNearNodeMap.end())
+			currentNearNodeMap[DIRECTION_2] = _mapsForNodesWithIndex[i - WORLD_MAP_SIZE_WIDTH];
+		if (currentNearNodeMap.find(DIRECTION_3) == currentNearNodeMap.end())
+			currentNearNodeMap[DIRECTION_3] = _mapsForNodesWithIndex[i - WORLD_MAP_SIZE_WIDTH + 1];
+		if (currentNearNodeMap.find(DIRECTION_4) == currentNearNodeMap.end())
+			currentNearNodeMap[DIRECTION_4] = _mapsForNodesWithIndex[i - 1];
+		if (currentNearNodeMap.find(DIRECTION_6) == currentNearNodeMap.end())
+			currentNearNodeMap[DIRECTION_6] = _mapsForNodesWithIndex[i + 1];
+		if (currentNearNodeMap.find(DIRECTION_7) == currentNearNodeMap.end())
+			currentNearNodeMap[DIRECTION_7] = _mapsForNodesWithIndex[i + WORLD_MAP_SIZE_WIDTH - 1];
+		if (currentNearNodeMap.find(DIRECTION_8) == currentNearNodeMap.end())
+			currentNearNodeMap[DIRECTION_8] = _mapsForNodesWithIndex[i + WORLD_MAP_SIZE_WIDTH];
+		if (currentNearNodeMap.find(DIRECTION_9) == currentNearNodeMap.end())
+			currentNearNodeMap[DIRECTION_9] = _mapsForNodesWithIndex[i + WORLD_MAP_SIZE_WIDTH + 1];
+		if (currentNearNodeMap.find(DIRECTION_N) == currentNearNodeMap.end())
+			currentNearNodeMap[DIRECTION_N] = _mapsForNodesWithIndex[i];
+	}
+
+	/**
+	반대편 posNum을 반환
+	posNum : 해당 좌표
+	direction : 해당 타일이 어느쪽 외곽선인지 입력
+	*/
+	auto getOppositeMap = [=](unsigned posNum, DirectionKind direction){
+		//원래의 좌표
+		unsigned x = posNum % WORLD_MAP_SIZE_WIDTH;
+		unsigned y = (posNum / WORLD_MAP_SIZE_WIDTH) + 1;
+		//반환할 좌표
+		unsigned targetX = x, targetY = y;
+		
+		switch (direction)
+		{
+		//사방
+		case DIRECTION_2:
+			targetY += WORLD_MAP_SIZE_HEIGHT - 1;
+			break;
+		case DIRECTION_4:
+			targetX += WORLD_MAP_SIZE_WIDTH - 1;
+			break;
+		case DIRECTION_6:
+			targetX -= WORLD_MAP_SIZE_WIDTH - 1;
+			break;
+		case DIRECTION_8:
+			targetY -= WORLD_MAP_SIZE_HEIGHT - 1;
+			break;
+		//대각선 방향
+		case DIRECTION_1:
+			targetX += WORLD_MAP_SIZE_WIDTH - 1;
+			targetY += WORLD_MAP_SIZE_HEIGHT - 1;
+			break;
+		case DIRECTION_3:
+			targetX -= WORLD_MAP_SIZE_WIDTH - 1;
+			targetY += WORLD_MAP_SIZE_HEIGHT - 1;
+			break;
+		case DIRECTION_7:
+			targetX += WORLD_MAP_SIZE_WIDTH - 1;
+			targetY -= WORLD_MAP_SIZE_HEIGHT - 1;
+			break;
+		case DIRECTION_9:
+			targetX -= WORLD_MAP_SIZE_WIDTH - 1;
+			targetY -= WORLD_MAP_SIZE_HEIGHT - 1;
+			break;
+
+		default:
+			log("getOppositeMap : 잘못된 방향을 입력했습니다.");
+			Beep(1000, 1000);
+			break;
+		}
+
+		return WORLD_MAP_SIZE_WIDTH*(targetY - 1) + targetX;
+
+	};
+
+	//외곽선을 순환시키기 위한 루프
+	for (int i = 0; i < WORLD_MAP_SIZE_HEIGHT; ++i)
+	{
+		for (int j = 0; j < WORLD_MAP_SIZE_WIDTH; ++j)
+		{
+			int posNum = WORLD_MAP_SIZE_WIDTH*i + j;
+			if (posNum % WORLD_MAP_SIZE_WIDTH == 0)//가장 왼쪽 줄이면
+				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_4] = _mapsForNodesWithIndex[getOppositeMap(posNum,DIRECTION_4)];
+			if ((posNum + 1) % WORLD_MAP_SIZE_WIDTH == 0)//가장 오른쪽 줄이면
+				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_6] = _mapsForNodesWithIndex[getOppositeMap(posNum, DIRECTION_6)];
+			if (posNum < WORLD_MAP_SIZE_WIDTH)//가장 아랫쪽 줄이면
+				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_2] = _mapsForNodesWithIndex[getOppositeMap(posNum, DIRECTION_2)];
+			if (posNum >= WORLD_MAP_SIZE_HEIGHT*WORLD_MAP_SIZE_WIDTH - WORLD_MAP_SIZE_WIDTH)//가장 윗쪽 줄이면
+			
+				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_8] = _mapsForNodesWithIndex[getOppositeMap(posNum, DIRECTION_8)];
+		}
+ 	}
 	for (int i = 0; i < WORLD_MAP_SIZE_HEIGHT; ++i)
 	{
 		for (int j = 0; j < WORLD_MAP_SIZE_WIDTH; ++j)
@@ -41,54 +168,27 @@ void MapManager::initialize()
 			int posNum = WORLD_MAP_SIZE_WIDTH*i + j;
 			if (posNum % WORLD_MAP_SIZE_WIDTH == 0)//가장 왼쪽 줄이면
 			{
-				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_1] = nullptr;
-				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_4] = nullptr;
-				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_7] = nullptr;
+				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_1] = _mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_4]->nearNodesMap[DIRECTION_2];
+				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_7] = _mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_4]->nearNodesMap[DIRECTION_8];
 			}
 			if ((posNum + 1) % WORLD_MAP_SIZE_WIDTH == 0)//가장 오른쪽 줄이면
 			{
-				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_3] = nullptr;
-				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_6] = nullptr;
-				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_9] = nullptr;
+
+				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_3] = _mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_6]->nearNodesMap[DIRECTION_2];
+				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_9] = _mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_6]->nearNodesMap[DIRECTION_8];
 			}
 			if (posNum < WORLD_MAP_SIZE_WIDTH)//가장 아랫쪽 줄이면
 			{
-				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_1] = nullptr;
-				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_2] = nullptr;
-				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_3] = nullptr;
+				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_1] = _mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_2]->nearNodesMap[DIRECTION_4];
+				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_3] = _mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_2]->nearNodesMap[DIRECTION_6];
 			}
 			if (posNum >= WORLD_MAP_SIZE_HEIGHT*WORLD_MAP_SIZE_WIDTH - WORLD_MAP_SIZE_WIDTH)//가장 윗쪽 줄이면
 			{
-				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_7] = nullptr;
-				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_8] = nullptr;
-				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_9] = nullptr;
+				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_7] = _mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_8]->nearNodesMap[DIRECTION_4];
+				_mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_9] = _mapsForNodesWithIndex[posNum]->nearNodesMap[DIRECTION_8]->nearNodesMap[DIRECTION_6];
 			}
 		}
 	}
-	//그래프를 그려보자.
-	for (unsigned i = 0; i < WORLD_MAP_SIZE_WIDTH*WORLD_MAP_SIZE_HEIGHT; ++i)
-	{
-		auto& nearNdMap = _mapsForNodesWithIndex[i]->nearNodesMap;
-		if (nearNdMap.find(DIRECTION_1) == nearNdMap.end())//이미 값이 들어있지 않은 경우
-			nearNdMap[DIRECTION_1] = _mapsForNodesWithIndex[i - WORLD_MAP_SIZE_WIDTH - 1];
-		if (nearNdMap.find(DIRECTION_2) == nearNdMap.end())
-			nearNdMap[DIRECTION_2] = _mapsForNodesWithIndex[i - WORLD_MAP_SIZE_WIDTH];
-		if (nearNdMap.find(DIRECTION_3) == nearNdMap.end())
-			nearNdMap[DIRECTION_3] = _mapsForNodesWithIndex[i - WORLD_MAP_SIZE_WIDTH + 1];
-		if (nearNdMap.find(DIRECTION_4) == nearNdMap.end())
-			nearNdMap[DIRECTION_4] = _mapsForNodesWithIndex[i - 1];
-		if (nearNdMap.find(DIRECTION_6) == nearNdMap.end())
-			nearNdMap[DIRECTION_6] = _mapsForNodesWithIndex[i + 1];
-		if (nearNdMap.find(DIRECTION_7) == nearNdMap.end())
-			nearNdMap[DIRECTION_7] = _mapsForNodesWithIndex[i + WORLD_MAP_SIZE_WIDTH - 1];
-		if (nearNdMap.find(DIRECTION_8) == nearNdMap.end())
-			nearNdMap[DIRECTION_8] = _mapsForNodesWithIndex[i + WORLD_MAP_SIZE_WIDTH];
-		if (nearNdMap.find(DIRECTION_9) == nearNdMap.end())
-			nearNdMap[DIRECTION_9] = _mapsForNodesWithIndex[i + WORLD_MAP_SIZE_WIDTH + 1];
-		if (nearNdMap.find(DIRECTION_N) == nearNdMap.end())
-			nearNdMap[DIRECTION_N] = _mapsForNodesWithIndex[i];
-	}
-
 	//_tiledMap 초기화
 	for (auto i = _mapsForNodesWithIndex.begin(); i != _mapsForNodesWithIndex.end(); ++i)
 		i->second->_tiledMap = nullptr;
@@ -131,6 +231,12 @@ Node* MapManager::loadZoneByNumber(const int zoneNumber)
 void MapManager::reload(DirectionKind newZoneDirection)
 {
 	NodeTileMap* newCenterZone = _nineZones[newZoneDirection];
+
+
+	auto checkNullAndLoadMap = [=](DirectionKind direction){
+		if(_nineZones[direction] != nullptr)
+			TMXTiledMap::create(_nineZones[direction]->_mapFileName);
+	};
 
 	//생 노가다 코드..
 	switch (newZoneDirection)
