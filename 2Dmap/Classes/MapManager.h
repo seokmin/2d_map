@@ -115,4 +115,6 @@ private:
 	Node*									_handle = nullptr;
 	void									reposition();
 	bool									_isLoading = false;
+	void									requestSetAnchorPoint(Node* node, Vec2 vec);
+	void									requestSetPosition(Node* node, Vec2 vec);
 };
