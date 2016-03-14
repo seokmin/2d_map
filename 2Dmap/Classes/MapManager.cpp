@@ -217,6 +217,11 @@ Node* MapManager::loadZoneByNumber(const int zoneNumber)
 
 	_handle->setPosition(Vec2(0, 0/*SCREEN_PIXEL_WIDTH/2,SCREEN_PIXEL_HEIGHT/2*/));
 
+	waitFor(_nineZones[DIRECTION_N]->_tiledMap);
+	_sizeOfZoneInPixel =  _nineZones[DIRECTION_N]->_tiledMap->getContentSize();
+
+	moveMapPosition(Vec2(400,400));
+
 	return _handle;
 }
 
@@ -374,7 +379,7 @@ void MapManager::reposition()
 
 Size MapManager::getSizeOfZoneInPixel()
 {
-	return _nineZones[DIRECTION_N]->_tiledMap->getContentSize();
+	return _sizeOfZoneInPixel;
 }
 
 cocos2d::Vec2 MapManager::getPosition()

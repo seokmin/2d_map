@@ -91,15 +91,20 @@ void HelloWorld::update(float delta)
 	Size mapSize = MapManager::getInstance()->getSizeOfZoneInPixel();
 	Vec2 mapPosition = MapManager::getInstance()->getPosition();
 	Vec2 charPosition = _sampleCharacter->getPosition();
+	
 
-	if (mapPosition.x + mapSize.width/2 < charPosition.x)
-		MapManager::getInstance()->reload(DIRECTION_6);
-	else if (mapPosition.x - mapSize.width/2> charPosition.x)
-		MapManager::getInstance()->reload(DIRECTION_4);
-	else if (mapPosition.y + mapSize.height/2 < charPosition.y)
-		MapManager::getInstance()->reload(DIRECTION_8);
-	else if (mapPosition.y - mapSize.height/2 > charPosition.y)
-		MapManager::getInstance()->reload(DIRECTION_2);
+	if (mapPosition.x + mapSize.width / 2 < charPosition.x)
+			Director::getInstance()->getScheduler()->performFunctionInCocosThread([](){MapManager::getInstance()->reload(DIRECTION_6); });
+	//MapManager::getInstance()->reload(DIRECTION_6);								  
+	else if (mapPosition.x - mapSize.width / 2 > charPosition.x)
+		Director::getInstance()->getScheduler()->performFunctionInCocosThread([](){(MapManager::getInstance()->reload(DIRECTION_4)); });
+	//	MapManager::getInstance()->reload(DIRECTION_4);
+	else if (mapPosition.y + mapSize.height / 2 < charPosition.y)
+		Director::getInstance()->getScheduler()->performFunctionInCocosThread([](){(MapManager::getInstance()->reload(DIRECTION_8)); });
+	//	MapManager::getInstance()->reload(DIRECTION_8);
+	else if (mapPosition.y - mapSize.height / 2 > charPosition.y)
+		Director::getInstance()->getScheduler()->performFunctionInCocosThread([](){(MapManager::getInstance()->reload(DIRECTION_2)); });
+	//	MapManager::getInstance()->reload(DIRECTION_2);
 }
 
 void HelloWorld::keyDownDispatcher(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event)

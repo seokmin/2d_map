@@ -54,9 +54,6 @@
     <ClCompile Include="..\Classes\NodeTileMap.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\HandleMap.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -87,9 +84,6 @@
       <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\NodeTileMap.h">
-      <Filter>Map</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\HandleMap.h">
       <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>

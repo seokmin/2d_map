@@ -5,42 +5,79 @@ USING_NS_CC;
 
 //1이 가장 좌측 하단
 static const std::string WORLD_MAP_FILENAMES[WORLD_MAP_SIZE_WIDTH*WORLD_MAP_SIZE_HEIGHT] = {
-	"Map/small/001.tmx",
-	"Map/small/002.tmx",
-	"Map/small/003.tmx",
-	"Map/small/004.tmx",
-	"Map/small/005.tmx",
-	"Map/small/006.tmx",
-	"Map/small/007.tmx",
-	"Map/small/008.tmx",
-	"Map/small/009.tmx",
-	"Map/small/010.tmx",
-	"Map/small/011.tmx",
-	"Map/small/012.tmx",
-	"Map/small/013.tmx",
-	"Map/small/014.tmx",
-	"Map/small/015.tmx",
-	"Map/small/016.tmx",
-	"Map/small/017.tmx",
-	"Map/small/018.tmx",
-	"Map/small/019.tmx",
-	"Map/small/020.tmx",
-	"Map/small/021.tmx",
-	"Map/small/022.tmx",
-	"Map/small/023.tmx",
-	"Map/small/024.tmx",
-	"Map/small/025.tmx",
-	"Map/small/026.tmx",
-	"Map/small/027.tmx",
-	"Map/small/028.tmx",
-	"Map/small/029.tmx",
-	"Map/small/030.tmx",
-	"Map/small/031.tmx",
-	"Map/small/032.tmx",
-	"Map/small/033.tmx",
-	"Map/small/034.tmx",
-	"Map/small/035.tmx",
-	"Map/small/036.tmx"
+// 	"Map/small/001.tmx",
+// 	"Map/small/002.tmx",
+// 	"Map/small/003.tmx",
+// 	"Map/small/004.tmx",
+// 	"Map/small/005.tmx",
+// 	"Map/small/006.tmx",
+// 	"Map/small/007.tmx",
+// 	"Map/small/008.tmx",
+// 	"Map/small/009.tmx",
+// 	"Map/small/010.tmx",
+// 	"Map/small/011.tmx",
+// 	"Map/small/012.tmx",
+// 	"Map/small/013.tmx",
+// 	"Map/small/014.tmx",
+// 	"Map/small/015.tmx",
+// 	"Map/small/016.tmx",
+// 	"Map/small/017.tmx",
+// 	"Map/small/018.tmx",
+// 	"Map/small/019.tmx",
+// 	"Map/small/020.tmx",
+// 	"Map/small/021.tmx",
+// 	"Map/small/022.tmx",
+// 	"Map/small/023.tmx",
+// 	"Map/small/024.tmx",
+// 	"Map/small/025.tmx",
+// 	"Map/small/026.tmx",
+// 	"Map/small/027.tmx",
+// 	"Map/small/028.tmx",
+// 	"Map/small/029.tmx",
+// 	"Map/small/030.tmx",
+// 	"Map/small/031.tmx",
+// 	"Map/small/032.tmx",
+// 	"Map/small/033.tmx",
+// 	"Map/small/034.tmx",
+// 	"Map/small/035.tmx",
+// 	"Map/small/036.tmx"
+
+	"Map/001.tmx",
+	"Map/002.tmx",
+	"Map/003.tmx",
+	"Map/004.tmx",
+	"Map/005.tmx",
+	"Map/006.tmx",
+	"Map/007.tmx",
+	"Map/008.tmx",
+	"Map/009.tmx",
+	"Map/010.tmx",
+	"Map/011.tmx",
+	"Map/012.tmx",
+	"Map/013.tmx",
+	"Map/014.tmx",
+	"Map/015.tmx",
+	"Map/016.tmx",
+	"Map/017.tmx",
+	"Map/018.tmx",
+	"Map/019.tmx",
+	"Map/020.tmx",
+	"Map/021.tmx",
+	"Map/022.tmx",
+	"Map/023.tmx",
+	"Map/024.tmx",
+	"Map/025.tmx",
+	"Map/026.tmx",
+	"Map/027.tmx",
+	"Map/028.tmx",
+	"Map/029.tmx",
+	"Map/030.tmx",
+	"Map/031.tmx",
+	"Map/032.tmx",
+	"Map/033.tmx",
+	"Map/034.tmx",
+	"Map/035.tmx",
+	"Map/036.tmx"
 };
 static const std::string WORLD_MAP_NAMES[WORLD_MAP_SIZE_WIDTH*WORLD_MAP_SIZE_HEIGHT] = {
 	"Map1","Map2","Map3","Map4","Map5","Map6",
@@ -118,4 +155,17 @@ private:
 		direction : 해당 타일이 어느쪽 외곽선인지 입력
 	*/
 	unsigned	getOppositeZoneNumber(unsigned posNum, DirectionKind direction);
+
+	Size	_sizeOfZoneInPixel;
+
+	template <typename T>
+	void	waitFor(T* obj);
+
 };
+
+template <typename T>
+void MapManager::waitFor(T* obj)
+{
+	while (!obj)
+		;
+}
