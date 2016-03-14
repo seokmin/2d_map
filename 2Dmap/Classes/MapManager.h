@@ -66,7 +66,7 @@ public:
 	void	initialize();
 
 	/**
-		zone 번호를 기반으로 맵을 로딩
+		zone 번호를 기반으로 맵을 로딩하고 handle을 반환
 	*/
 	Node*	loadZoneByNumber(const int zoneNumber);
 	
