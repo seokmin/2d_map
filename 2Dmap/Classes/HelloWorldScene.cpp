@@ -63,28 +63,6 @@ bool HelloWorld::init()
 	menu->setPosition(Vec2::ZERO);
 	this->addChild(menu, 2);
 
-	/*for (int i = DIRECTION_1; i <= DIRECTION_9;++i)
-	{
-	_tiledMap.pushBack(TMXTiledMap::create("Map/testmap.tmx"));
-	_tiledMap.at(i)->setAnchorPoint(ccp(0.5, 0.5));
-	this->addChild(_tiledMap.at(i), 0);
-	}
-	{
-	auto centerPos = ccp(SCREEN_PIXEL_WIDTH / 2, SCREEN_PIXEL_HEIGHT / 2);
-	_sizeOfMap = _tiledMap.at(DIRECTION_N)->getContentSize();
-	_tiledMap.at(DIRECTION_N)->setPosition(centerPos);
-	_tiledMap.at(DIRECTION_1)->setPosition(centerPos + ccp(-1 * _sizeOfMap.width, -1 * _sizeOfMap.height));
-	_tiledMap.at(DIRECTION_2)->setPosition(centerPos + ccp(0, -1 * _sizeOfMap.height));
-	_tiledMap.at(DIRECTION_3)->setPosition(centerPos + ccp(1 * _sizeOfMap.width, -1 * _sizeOfMap.height));
-	_tiledMap.at(DIRECTION_4)->setPosition(centerPos + ccp(-1 * _sizeOfMap.width, 0));
-	_tiledMap.at(DIRECTION_6)->setPosition(centerPos + ccp(1 * _sizeOfMap.width, 0));
-	_tiledMap.at(DIRECTION_7)->setPosition(centerPos + ccp(-1 * _sizeOfMap.width, 1 * _sizeOfMap.height));
-	_tiledMap.at(DIRECTION_8)->setPosition(centerPos + ccp(0, 1 * _sizeOfMap.height));
-	_tiledMap.at(DIRECTION_9)->setPosition(centerPos + ccp(1 * _sizeOfMap.width, 1 * _sizeOfMap.height));
-	}*/
-	//log("Content size: %f, %f", testMapSize.width, testMapSize.height);
-
-
 
 
 	//이벤트디스패쳐
@@ -111,8 +89,8 @@ void HelloWorld::update(float delta)
 {
 
 	moveCharacter();
-	Size mapSize = MapManager::getInstance()->getSizeOfMapPixel();
-	Vec2 mapPosition = MapManager::getInstance()->getPositionOfCenterMap();
+	Size mapSize = MapManager::getInstance()->getSizeOfZoneInPixel();
+	Vec2 mapPosition = MapManager::getInstance()->getPosition();
 	Vec2 charPosition = _sampleCharacter->getPosition();
 
 	if (mapPosition.x + mapSize.width/2 < charPosition.x)
@@ -140,12 +118,12 @@ void HelloWorld::moveCharacter()
 
 	static float speed = 3.0f;
 	if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW])
-		MapManager::getInstance()->moveNineMaps(ccp(+speed, 0));
+		MapManager::getInstance()->moveMapPosition(Vec2(+speed, 0));
 	if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW])
-		MapManager::getInstance()->moveNineMaps(ccp(-speed, 0));
+		MapManager::getInstance()->moveMapPosition(Vec2(-speed, 0));
 	if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW])
-		MapManager::getInstance()->moveNineMaps(ccp(0, -speed));
+		MapManager::getInstance()->moveMapPosition(Vec2(0, -speed));
 	if (_isKeyPressed[(unsigned)cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW])
-		MapManager::getInstance()->moveNineMaps(ccp(0, +speed));
+		MapManager::getInstance()->moveMapPosition(Vec2(0, +speed));
 
 }
