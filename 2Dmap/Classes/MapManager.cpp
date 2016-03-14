@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "MapManager.h"
 #include "NodeTileMap.h"
+#include "MultiThreadedTiledMap.h"
+
 /*#include "HandleMap.h"*/
 
 MapManager* MapManager::_instance = nullptr;

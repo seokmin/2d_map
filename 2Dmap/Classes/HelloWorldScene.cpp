@@ -23,7 +23,7 @@ Scene* HelloWorld::createScene()
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
-	//////////////////////////////
+	////////////////////////////// 
 	// 1. super init first
 	if (!Layer::init())
 	{
@@ -87,7 +87,6 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 
 void HelloWorld::update(float delta)
 {
-
 	moveCharacter();
 	Size mapSize = MapManager::getInstance()->getSizeOfZoneInPixel();
 	Vec2 mapPosition = MapManager::getInstance()->getPosition();
